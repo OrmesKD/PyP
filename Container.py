@@ -44,6 +44,8 @@ def Calculate(Shapes):
 	    x+=1
 	    y=0
 
+	return heatMap
+
 	# #Grouping points
 	# x = 0
 	# y = 0

@@ -7,7 +7,7 @@ from shape import *
 Shapes = Container.Generate()
 
 #Calculate the heat graph to be displayed in the GUI
-Container.Calculate(Shapes)
+heatMap = Container.Calculate(Shapes)
 
 #Draw the screen with the calculations found from the Container problem
-Screen.draw(Shapes)
+Screen.draw(Shapes,heatMap)

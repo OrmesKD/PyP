@@ -3,7 +3,7 @@ import pygame
 import shape
 import numpy
 
-def draw(Shapes):
+def draw(Shapes,heatMap):
 	pygame.init()
 
 	# Colors that will be used in RGB format
@@ -33,15 +33,15 @@ def draw(Shapes):
 	        pygame.draw.rect(screen, BLACK, [shape.getX1()*10,shape.getY1()*10,(shape.getX2()-shape.getX1())*10,(shape.getY2()-shape.getY1())*10])
 
 	    
-	    # x = 0
-	    # y = 0
-	    # for row in heatMap:
-	    #     for e in row:
-	    #         text = font.render(str(e), True, (0,0,0))
-	    #         screen.blit(text, (x*10,y*10))
-	    #         y+=1
-	    #     x+=1
-	    #     y=0
+	    x = 0
+	    y = 0
+	    for row in heatMap:
+	        for e in row:
+	            text = font.render(str(e), True, (0,0,0))
+	            screen.blit(text, (x*10,y*10))
+	            y+=1
+	        x+=1
+	        y=0
 
 	    
 	                
