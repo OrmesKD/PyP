@@ -1,6 +1,7 @@
 import sys
 from shape import *
 from numpy import *
+from Node import *
 
 def Generate():
 	# Define the shapes
@@ -11,7 +12,7 @@ def Generate():
 
 	return Shapes
 
-def Calculate(Shapes):
+def calculateHeat(Shapes):
 	
 
 	heatMap = zeros((100,100), dtype=int)
@@ -46,12 +47,27 @@ def Calculate(Shapes):
 
 	return heatMap
 
-	# #Grouping points
-	# x = 0
-	# y = 0
-	# for row in heatMap:
-	#     for e in row:
-	#         if e = 0:
-	#             continue
-	#         #LEFT
-	#         if heatMap[x-1,y] > e-10 and heatMap[x-1,y] < e+10:
+def findContainer(heatMap):
+	nodeList = []
+	
+	#Generate Nodes from Points on heatMap
+	x = 0
+	y = 0
+	for row in heatMap:
+	    for heat in row:
+	        if heat == 0:
+	            continue
+	        else:
+	        	nodeList.append(Node(x,y,heat))
+	        x+=1
+	    y+=1
+	
+	#Group nodes in to possible container areas
+	Groups = []
+	for n in nodeList:
+		x = n.getX()
+		y = n.getY()
+		heat = n.getHeat()
+		#LEFT
+		if x > 0:
+			if heatMap(x-1,y) > heat-10 and heatMap(x-1,y) < heat+10:

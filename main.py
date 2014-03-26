@@ -7,7 +7,10 @@ from shape import *
 Shapes = Container.Generate()
 
 #Calculate the heat graph to be displayed in the GUI
-heatMap = Container.Calculate(Shapes)
+heatMap = Container.calculateHeat(Shapes)
+
+#Calculate the possible nodes for containers
+Container.findContainer(heatMap)
 
 #Draw the screen with the calculations found from the Container problem
 Screen.draw(Shapes,heatMap)
