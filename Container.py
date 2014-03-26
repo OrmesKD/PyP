@@ -63,11 +63,11 @@ def findContainer(heatMap):
 	    y+=1
 	
 	#Group nodes in to possible container areas
-	Groups = []
-	for n in nodeList:
-		x = n.getX()
-		y = n.getY()
-		heat = n.getHeat()
-		#LEFT
-		if x > 0:
-			if heatMap(x-1,y) > heat-10 and heatMap(x-1,y) < heat+10:
+	# Groups = []
+	# for n in nodeList:
+	# 	x = n.getX()
+	# 	y = n.getY()
+	# 	heat = n.getHeat()
+	# 	#LEFT
+	# 	if x > 0:
+	# 		if heatMap(x-1,y) > heat-10 and heatMap(x-1,y) < heat+10:
