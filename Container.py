@@ -4,7 +4,7 @@ from numpy import *
 from Node import *
 
 def Generate():
-	# Define the shapes
+	# Define the shapes HARD CODED ATM, SHAPES SHOULD BE PASSED IN FINAL
 	shape1 = Shape(20,20,30,60)
 	shape2 = Shape(60,20,80,40)
 	shape3 = Shape(20,60,80,70)
@@ -13,7 +13,7 @@ def Generate():
 	return Shapes
 
 def calculateHeat(Shapes):
-	
+	#Function for calculating considered heat points on the map
 
 	heatMap = zeros((100,100), dtype=int)
 	objMap = zeros((100,100), dtype=int)
