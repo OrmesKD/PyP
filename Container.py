@@ -12,6 +12,20 @@ def Generate():
 
 	return Shapes
 
+def findNode(nodeList,targetNode,x,y):
+	#Function used for finding a Node with the given x,y coordinates
+	for n in nodeList:
+		if n.getX() == x and n.getY() == y:
+			return n
+
+def nodeExists(nodeList,targetNode,x,y):
+	for n in nodeList:
+		if n.getX() == x and n.getY() == y:
+			return True
+		else:
+			continue
+		return False
+
 def calculateHeat(Shapes):
 	#Function for calculating considered heat points on the map
 
@@ -69,22 +83,121 @@ def findContainer(heatMap):
 		y = n.getY()
 		heat = n.getHeat()
 		groupFound = False
+
+		print x
+		print y
+
+
 		#LEFT
-		if x > 0:
-			if heatMap[x-1,y] > heat-10 and heatMap[x-1,y] < heat+10:
-				for neighbour in nodeList:
-					if neighbour.getX() == x-1 and neighbour.getY() == y:
-						neighbourNode = neighbour
-						break
-					else:
-						continue
-				for g in Groups:
-					if neighbourNode.belongsTo(g):
-						g.append(n)
-					else:
-						continue
-				if groupFound == False:
+		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
+			neighbourNode = findNode(nodeList,n,x-1,y)
+			neighbourHeat = neighbourNode.getHeat()
+			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
+				else:
+					for g in Groups:
+						if neighbourNode.belongsTo(g):
+							g.append(n)
+						else:
+							continue
+						if groupFound == False:
+							Groups.append([n,neighbourNode])
+							groupFound = True
+						else:
+							for g in Groups:
+								if n.belongsTo(g):
+									g.append(neighbourNode)
+
+		#RIGHT
+		if x < 100 and nodeExists(nodeList,n,x+1,y) == True:
+			neighbourNode = findNode(nodeList,n,x+1,y)
+			neighbourHeat = neighbourNode.getHeat()
+			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				if len(Groups) == 0:
+					Groups.append([n,neighbourNode])
+				else:
+					for g in Groups:
+						if neighbourNode.belongsTo(g):
+							g.append(n)
+						else:
+							continue
+						if groupFound == False:
+							Groups.append([n,neighbourNode])
+							groupFound = True
+						else:
+							for g in Groups:
+								if n.belongsTo(g):
+									g.append(neighbourNode)
+		#UP
+		if y > 0 and nodeExists(nodeList,n,x,y-1) == True:
+			neighbourNode = findNode(nodeList,n,x,y-1)
+			neighbourHeat = neighbourNode.getHeat()
+			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				if len(Groups) == 0:
+					Groups.append([n,neighbourNode])
+				else:
+					for g in Groups:
+						if neighbourNode.belongsTo(g):
+							g.append(n)
+						else:
+							continue
+						if groupFound == False:
+							Groups.append([n,neighbourNode])
+							groupFound = True
+						else:
+							for g in Groups:
+								if n.belongsTo(g):
+									g.append(neighbourNode)
+		#DOWN
+		if y < 100 and nodeExists(nodeList,n,x,y+1) == True:
+			neighbourNode = findNode(nodeList,n,x,y+1)
+			neighbourHeat = neighbourNode.getHeat()
+			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				if len(Groups) == 0:
+					Groups.append([n,neighbourNode])
+				else:
+					for g in Groups:
+						if neighbourNode.belongsTo(g):
+							g.append(n)
+						else:
+							continue
+						if groupFound == False:
+							Groups.append([n,neighbourNode])
+							groupFound = True
+						else:
+							for g in Groups:
+								if n.belongsTo(g):
+									g.append(neighbourNode)
+
+	bestScore = 0
+	bestGroup = []
+	for g in Groups:
+		score = 0
+		for node in g:
+			score += node.getHeat()
+		if score > bestScore:
+			bestScore = score
+			bestGroup = g
+
+	lowestX = 100
+	lowestY = 100
+	highestX = 0
+	highestY = 0
+	for node in bestGroup:
+		if node.getX() < lowestX and node.getY() < lowestY:
+			lowestX = node.getX()
+			lowestY = node.getY()
+	for node in bestGroup:
+		if node.getX() > highestX and node.getY() > highestY:
+			highestX = node.getX()
+			highestY = node.getY()
+
+	#print "Lowest: " + str(lowestX) + ", " + str(lowestY)
+	#print "Highest: " + str(highestX) + ", " + str(highestY)
+
+
+
 
 
 
