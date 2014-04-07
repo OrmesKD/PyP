@@ -70,25 +70,27 @@ def findContainer(heatMap):
 	for row in heatMap:
 	    for heat in row:
 	        if heat == 0:
-	            continue
-	        else:	
+	        	x+=1
+	        	continue
+	        else:
 	        	nodeList.append(Node(x,y,heat))
-	        x+=1
+	        x+=1 
 	    y+=1
+	    x=0
 	
 	#Group nodes in to possible container areas
 	Groups = []
+	#print "Groups: " + str(len(Groups))
 	for n in nodeList:
 		x = n.getX()
 		y = n.getY()
 		heat = n.getHeat()
 		groupFound = False
 
-		print x
-		print y
+		
 
-
-		#LEFT
+		print "Groups: " + str(len(Groups))
+		#LEFT -- Being edited.
 		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
 			neighbourHeat = neighbourNode.getHeat()
@@ -99,16 +101,21 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g):
 							g.append(n)
-						else:
-							continue
-						if groupFound == False:
-							Groups.append([n,neighbourNode])
 							groupFound = True
 						else:
-							for g in Groups:
-								if n.belongsTo(g):
-									g.append(neighbourNode)
-
+							continue
+					if groupFound == False:
+						for g in Groups:
+							if n.belongsTo(g):
+								g.append(neighbourNode)
+								groupFound = True
+							else:
+								continue
+					if groupFound == False:		
+						Groups.append([n,neighbourNode])
+						groupFound = True
+						
+		
 		#RIGHT
 		if x < 100 and nodeExists(nodeList,n,x+1,y) == True:
 			neighbourNode = findNode(nodeList,n,x+1,y)
@@ -120,6 +127,7 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g):
 							g.append(n)
+							groupFound = True
 						else:
 							continue
 						if groupFound == False:
@@ -129,6 +137,7 @@ def findContainer(heatMap):
 							for g in Groups:
 								if n.belongsTo(g):
 									g.append(neighbourNode)
+		
 		#UP
 		if y > 0 and nodeExists(nodeList,n,x,y-1) == True:
 			neighbourNode = findNode(nodeList,n,x,y-1)
@@ -140,6 +149,7 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g):
 							g.append(n)
+							groupFound = True
 						else:
 							continue
 						if groupFound == False:
@@ -149,6 +159,7 @@ def findContainer(heatMap):
 							for g in Groups:
 								if n.belongsTo(g):
 									g.append(neighbourNode)
+		
 		#DOWN
 		if y < 100 and nodeExists(nodeList,n,x,y+1) == True:
 			neighbourNode = findNode(nodeList,n,x,y+1)
@@ -160,6 +171,7 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g):
 							g.append(n)
+							groupFound = True
 						else:
 							continue
 						if groupFound == False:
@@ -169,7 +181,6 @@ def findContainer(heatMap):
 							for g in Groups:
 								if n.belongsTo(g):
 									g.append(neighbourNode)
-
 	bestScore = 0
 	bestGroup = []
 	for g in Groups:
@@ -193,8 +204,8 @@ def findContainer(heatMap):
 			highestX = node.getX()
 			highestY = node.getY()
 
-	#print "Lowest: " + str(lowestX) + ", " + str(lowestY)
-	#print "Highest: " + str(highestX) + ", " + str(highestY)
+	print "Lowest: " + str(lowestX) + ", " + str(lowestY)
+	print "Highest: " + str(highestX) + ", " + str(highestY)
 
 
 
