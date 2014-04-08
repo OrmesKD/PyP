@@ -85,102 +85,103 @@ def findContainer(heatMap):
 		x = n.getX()
 		y = n.getY()
 		heat = n.getHeat()
-		groupFound = False
+		
 
 		
 
-		print "Groups: " + str(len(Groups))
+		#print "Groups: " + str(len(Groups))
 		#LEFT -- Being edited.
 		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
 			neighbourHeat = neighbourNode.getHeat()
+			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
-						if neighbourNode.belongsTo(g):
+						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
 							groupFound = True
+							break
+						elif n.belongsTo(g) == True:
+							g.append(neighbourNode)
+							groupFound = True
+							break
 						else:
 							continue
 					if groupFound == False:
-						for g in Groups:
-							if n.belongsTo(g):
-								g.append(neighbourNode)
-								groupFound = True
-							else:
-								continue
-					if groupFound == False:		
 						Groups.append([n,neighbourNode])
-						groupFound = True
 						
 		
 		#RIGHT
 		if x < 100 and nodeExists(nodeList,n,x+1,y) == True:
 			neighbourNode = findNode(nodeList,n,x+1,y)
 			neighbourHeat = neighbourNode.getHeat()
+			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
-						if neighbourNode.belongsTo(g):
+						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
 							groupFound = True
+							break
+						elif n.belongsTo(g) == True:
+							g.append(neighbourNode)
+							groupFound = True
+							break
 						else:
 							continue
-						if groupFound == False:
-							Groups.append([n,neighbourNode])
-							groupFound = True
-						else:
-							for g in Groups:
-								if n.belongsTo(g):
-									g.append(neighbourNode)
+					if groupFound == False:
+						Groups.append([n,neighbourNode])
 		
 		#UP
 		if y > 0 and nodeExists(nodeList,n,x,y-1) == True:
 			neighbourNode = findNode(nodeList,n,x,y-1)
 			neighbourHeat = neighbourNode.getHeat()
+			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
-						if neighbourNode.belongsTo(g):
+						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
 							groupFound = True
+							break
+						elif n.belongsTo(g) == True:
+							g.append(neighbourNode)
+							groupFound = True
+							break
 						else:
 							continue
-						if groupFound == False:
-							Groups.append([n,neighbourNode])
-							groupFound = True
-						else:
-							for g in Groups:
-								if n.belongsTo(g):
-									g.append(neighbourNode)
+					if groupFound == False:
+						Groups.append([n,neighbourNode])
 		
 		#DOWN
 		if y < 100 and nodeExists(nodeList,n,x,y+1) == True:
 			neighbourNode = findNode(nodeList,n,x,y+1)
 			neighbourHeat = neighbourNode.getHeat()
+			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
-						if neighbourNode.belongsTo(g):
+						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
 							groupFound = True
+							break
+						elif n.belongsTo(g) == True:
+							g.append(neighbourNode)
+							groupFound = True
+							break
 						else:
 							continue
-						if groupFound == False:
-							Groups.append([n,neighbourNode])
-							groupFound = True
-						else:
-							for g in Groups:
-								if n.belongsTo(g):
-									g.append(neighbourNode)
+					if groupFound == False:
+						Groups.append([n,neighbourNode])
 	bestScore = 0
 	bestGroup = []
 	for g in Groups:
