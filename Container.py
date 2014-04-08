@@ -80,14 +80,13 @@ def findContainer(heatMap):
 	
 	#Group nodes in to possible container areas
 	Groups = []
-	#print "Groups: " + str(len(Groups))
+	count = 1
 	for n in nodeList:
+		print count
+		count+=1
 		x = n.getX()
 		y = n.getY()
 		heat = n.getHeat()
-		
-
-		
 
 		#print "Groups: " + str(len(Groups))
 		#LEFT -- Being edited.
@@ -102,15 +101,11 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
-							groupFound = True
 							break
 						elif n.belongsTo(g) == True:
 							g.append(neighbourNode)
-							groupFound = True
 							break
-						else:
-							continue
-					if groupFound == False:
+					else:
 						Groups.append([n,neighbourNode])
 						
 		
@@ -126,15 +121,11 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
-							groupFound = True
 							break
 						elif n.belongsTo(g) == True:
 							g.append(neighbourNode)
-							groupFound = True
 							break
-						else:
-							continue
-					if groupFound == False:
+					else:
 						Groups.append([n,neighbourNode])
 		
 		#UP
@@ -149,15 +140,11 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
-							groupFound = True
 							break
 						elif n.belongsTo(g) == True:
 							g.append(neighbourNode)
-							groupFound = True
 							break
-						else:
-							continue
-					if groupFound == False:
+					else:
 						Groups.append([n,neighbourNode])
 		
 		#DOWN
@@ -172,15 +159,11 @@ def findContainer(heatMap):
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
 							g.append(n)
-							groupFound = True
 							break
 						elif n.belongsTo(g) == True:
 							g.append(neighbourNode)
-							groupFound = True
 							break
-						else:
-							continue
-					if groupFound == False:
+					else:
 						Groups.append([n,neighbourNode])
 	bestScore = 0
 	bestGroup = []
@@ -205,8 +188,11 @@ def findContainer(heatMap):
 			highestX = node.getX()
 			highestY = node.getY()
 
+	print "Number of groups: " + str(len(Groups))
 	print "Lowest: " + str(lowestX) + ", " + str(lowestY)
 	print "Highest: " + str(highestX) + ", " + str(highestY)
+
+	
 
 
 
