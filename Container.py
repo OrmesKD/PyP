@@ -89,7 +89,7 @@ def findContainer(heatMap):
 		heat = n.getHeat()
 
 		#print "Groups: " + str(len(Groups))
-		#LEFT -- Being edited.
+		#LEFT
 		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
 			neighbourHeat = neighbourNode.getHeat()
