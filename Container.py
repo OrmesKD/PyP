@@ -1,4 +1,5 @@
 import sys
+import pygame
 from shape import *
 from numpy import *
 from Node import *
@@ -61,15 +62,16 @@ def calculateHeat(Shapes):
 
 	return heatMap
 
-def findContainer(heatMap):
+def findContainer(pygame,Screen,heatMap):
 	nodeList = []
-	
+	RED = (255,0,0)
+	DEFAULT = (0,0,0)
 	#Generate Nodes from Points on heatMap
 	x = 0
 	y = 0
 	for row in heatMap:
 	    for heat in row:
-	        if heat == 0:
+	        if heat < 50:
 	        	x+=1
 	        	continue
 	        else:
@@ -82,19 +84,22 @@ def findContainer(heatMap):
 	Groups = []
 	count = 1
 	for n in nodeList:
+		#Screen.drawNodes(pygame,nodeList)
 		print count
 		count+=1
 		x = n.getX()
 		y = n.getY()
 		heat = n.getHeat()
 
-		#print "Groups: " + str(len(Groups))
+		
 		#LEFT
 		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				n.setColour(RED)
+				neighbourNode.setColour(RED)
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
@@ -107,14 +112,16 @@ def findContainer(heatMap):
 							break
 					else:
 						Groups.append([n,neighbourNode])
+
 						
-		
 		#RIGHT
 		if x < 100 and nodeExists(nodeList,n,x+1,y) == True:
 			neighbourNode = findNode(nodeList,n,x+1,y)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				n.setColour(RED)
+				neighbourNode.setColour(RED)
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
@@ -127,13 +134,15 @@ def findContainer(heatMap):
 							break
 					else:
 						Groups.append([n,neighbourNode])
-		
+
 		#UP
 		if y > 0 and nodeExists(nodeList,n,x,y-1) == True:
 			neighbourNode = findNode(nodeList,n,x,y-1)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				n.setColour(RED)
+				neighbourNode.setColour(RED)
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
@@ -146,6 +155,7 @@ def findContainer(heatMap):
 							break
 					else:
 						Groups.append([n,neighbourNode])
+
 		
 		#DOWN
 		if y < 100 and nodeExists(nodeList,n,x,y+1) == True:
@@ -153,6 +163,8 @@ def findContainer(heatMap):
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
 			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
+				n.setColour(RED)
+				neighbourNode.setColour(RED)
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
@@ -165,6 +177,8 @@ def findContainer(heatMap):
 							break
 					else:
 						Groups.append([n,neighbourNode])
+
+
 	bestScore = 0
 	bestGroup = []
 	for g in Groups:
@@ -189,8 +203,13 @@ def findContainer(heatMap):
 			highestY = node.getY()
 
 	print "Number of groups: " + str(len(Groups))
+	print "Number of nodes in group: " + str(len(bestGroup))
 	print "Lowest: " + str(lowestX) + ", " + str(lowestY)
 	print "Highest: " + str(highestX) + ", " + str(highestY)
+
+	bestContainer = [lowestX,lowestY,highestX,highestY]
+
+	return bestContainer
 
 	
 
