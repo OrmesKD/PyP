@@ -29,18 +29,15 @@ while not done:
         #INSERT EVENT HANDLER FOR WHEN NODES CHANGE GROUP/COLOURS
 
     Screen.drawShapes(pygame,Shapes)
+    Screen.initDraw(pygame,heatMap)
     if firstLaunch:
-        Screen.initDraw(pygame,heatMap)
+        pygame.display.flip()
         bestContainer = Container.findContainer(pygame,Screen,heatMap)
         firstLaunch = False
 
-    #Screen.drawContainer(pygame,bestContainer)
+    
+    Screen.drawContainer(pygame,bestContainer)
     pygame.display.flip()
 
 pygame.quit()
-
-
-
-#Calculate the possible nodes for containers
-#Container.findContainer(heatMap)
 

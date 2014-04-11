@@ -72,111 +72,130 @@ def findContainer(pygame,Screen,heatMap):
 	for row in heatMap:
 	    for heat in row:
 	        if heat < 50:
-	        	x+=1
+	        	y+=1
 	        	continue
 	        else:
 	        	nodeList.append(Node(x,y,heat))
-	        x+=1 
-	    y+=1
-	    x=0
+	        y+=1 
+	    x+=1
+	    y=0
 	
 	#Group nodes in to possible container areas
 	Groups = []
-	count = 1
+	
 	for n in nodeList:
-		#Screen.drawNodes(pygame,nodeList)
-		print count
-		count+=1
 		x = n.getX()
 		y = n.getY()
 		heat = n.getHeat()
 
 		
 		#LEFT
-		if x > 0 and nodeExists(nodeList,n,x-1,y) == True:
+		if nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
-			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
-				n.setColour(RED)
-				neighbourNode.setColour(RED)
+			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
+					print "Possible containers: " + str(len(Groups))
 				else:
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
-							g.append(n)
-							break
+							if n.belongsTo(g):
+								break
+							else:
+								g.append(n)
+								break
 						elif n.belongsTo(g) == True:
-							g.append(neighbourNode)
-							break
+							if neighbourNode.belongsTo(g):
+								break
+							else:
+								g.append(neighbourNode)
+								break
 					else:
 						Groups.append([n,neighbourNode])
+						print "Possible containers: " + str(len(Groups))
 
 						
 		#RIGHT
-		if x < 100 and nodeExists(nodeList,n,x+1,y) == True:
+		if nodeExists(nodeList,n,x+1,y) == True:
 			neighbourNode = findNode(nodeList,n,x+1,y)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
-			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
-				n.setColour(RED)
-				neighbourNode.setColour(RED)
+			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
+					print "Possible containers: " + str(len(Groups))
 				else:
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
-							g.append(n)
-							break
+							if n.belongsTo(g):
+								break
+							else:
+								g.append(n)
+								break
 						elif n.belongsTo(g) == True:
-							g.append(neighbourNode)
-							break
+							if neighbourNode.belongsTo(g):
+								break
+							else:
+								g.append(neighbourNode)
+								break
 					else:
 						Groups.append([n,neighbourNode])
+						print "Possible containers: " + str(len(Groups))
 
 		#UP
-		if y > 0 and nodeExists(nodeList,n,x,y-1) == True:
+		if nodeExists(nodeList,n,x,y-1) == True:
 			neighbourNode = findNode(nodeList,n,x,y-1)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
-			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
-				n.setColour(RED)
-				neighbourNode.setColour(RED)
+			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
-							g.append(n)
-							break
+							if n.belongsTo(g):
+								break
+							else:
+								g.append(n)
+								break
 						elif n.belongsTo(g) == True:
-							g.append(neighbourNode)
-							break
+							if neighbourNode.belongsTo(g):
+								break
+							else:
+								g.append(neighbourNode)
+								break
 					else:
 						Groups.append([n,neighbourNode])
+						print "Possible containers: " + str(len(Groups))
 
 		
 		#DOWN
-		if y < 100 and nodeExists(nodeList,n,x,y+1) == True:
+		if nodeExists(nodeList,n,x,y+1) == True:
 			neighbourNode = findNode(nodeList,n,x,y+1)
 			neighbourHeat = neighbourNode.getHeat()
 			groupFound = False
-			if neighbourHeat > heat-10 and neighbourHeat < heat+10:
-				n.setColour(RED)
-				neighbourNode.setColour(RED)
+			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
 				if len(Groups) == 0:
 					Groups.append([n,neighbourNode])
 				else:
 					for g in Groups:
 						if neighbourNode.belongsTo(g) == True:
-							g.append(n)
-							break
+							if n.belongsTo(g):
+								break
+							else:
+								g.append(n)
+								break
 						elif n.belongsTo(g) == True:
-							g.append(neighbourNode)
-							break
+							if neighbourNode.belongsTo(g):
+								break
+							else:
+								g.append(neighbourNode)
+								break
 					else:
 						Groups.append([n,neighbourNode])
+						print "Possible containers: " + str(len(Groups))
 
 
 	bestScore = 0
@@ -198,7 +217,7 @@ def findContainer(pygame,Screen,heatMap):
 			lowestX = node.getX()
 			lowestY = node.getY()
 	for node in bestGroup:
-		if node.getX() > highestX and node.getY() > highestY:
+		if node.getX() >= highestX and node.getY() >= highestY:
 			highestX = node.getX()
 			highestY = node.getY()
 
