@@ -62,7 +62,36 @@ def calculateHeat(Shapes):
 
 	return heatMap
 
-def findContainer(pygame,Screen,heatMap):
+def search(Node,neighbourNode,Groups):
+	n = Node
+	heat = n.getHeat()
+	neighbourHeat = neighbourNode.getHeat()
+
+	groupFound = False
+	if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
+		if len(Groups) == 0:
+			Groups.append([n,neighbourNode])
+			print "Possible containers: " + str(len(Groups))
+		else:
+			for g in Groups:
+				if neighbourNode.belongsTo(g) == True:
+					if n.belongsTo(g):
+						break
+					else:
+						g.append(n)
+						break
+				elif n.belongsTo(g) == True:
+					if neighbourNode.belongsTo(g):
+						break
+					else:
+						g.append(neighbourNode)
+						break
+			else:
+				Groups.append([n,neighbourNode])
+				print "Possible containers: " + str(len(Groups))
+	return Groups
+
+def findContainer(heatMap):
 	nodeList = []
 	RED = (255,0,0)
 	DEFAULT = (0,0,0)
@@ -86,117 +115,28 @@ def findContainer(pygame,Screen,heatMap):
 	for n in nodeList:
 		x = n.getX()
 		y = n.getY()
-		heat = n.getHeat()
-
 		
 		#LEFT
 		if nodeExists(nodeList,n,x-1,y) == True:
 			neighbourNode = findNode(nodeList,n,x-1,y)
-			neighbourHeat = neighbourNode.getHeat()
-			groupFound = False
-			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
-				if len(Groups) == 0:
-					Groups.append([n,neighbourNode])
-					print "Possible containers: " + str(len(Groups))
-				else:
-					for g in Groups:
-						if neighbourNode.belongsTo(g) == True:
-							if n.belongsTo(g):
-								break
-							else:
-								g.append(n)
-								break
-						elif n.belongsTo(g) == True:
-							if neighbourNode.belongsTo(g):
-								break
-							else:
-								g.append(neighbourNode)
-								break
-					else:
-						Groups.append([n,neighbourNode])
-						print "Possible containers: " + str(len(Groups))
-
+			Groups = search(n,neighbourNode,Groups)
+			
 						
 		#RIGHT
 		if nodeExists(nodeList,n,x+1,y) == True:
 			neighbourNode = findNode(nodeList,n,x+1,y)
-			neighbourHeat = neighbourNode.getHeat()
-			groupFound = False
-			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
-				if len(Groups) == 0:
-					Groups.append([n,neighbourNode])
-					print "Possible containers: " + str(len(Groups))
-				else:
-					for g in Groups:
-						if neighbourNode.belongsTo(g) == True:
-							if n.belongsTo(g):
-								break
-							else:
-								g.append(n)
-								break
-						elif n.belongsTo(g) == True:
-							if neighbourNode.belongsTo(g):
-								break
-							else:
-								g.append(neighbourNode)
-								break
-					else:
-						Groups.append([n,neighbourNode])
-						print "Possible containers: " + str(len(Groups))
+			Groups = search(n,neighbourNode,Groups)
 
 		#UP
 		if nodeExists(nodeList,n,x,y-1) == True:
 			neighbourNode = findNode(nodeList,n,x,y-1)
-			neighbourHeat = neighbourNode.getHeat()
-			groupFound = False
-			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
-				if len(Groups) == 0:
-					Groups.append([n,neighbourNode])
-				else:
-					for g in Groups:
-						if neighbourNode.belongsTo(g) == True:
-							if n.belongsTo(g):
-								break
-							else:
-								g.append(n)
-								break
-						elif n.belongsTo(g) == True:
-							if neighbourNode.belongsTo(g):
-								break
-							else:
-								g.append(neighbourNode)
-								break
-					else:
-						Groups.append([n,neighbourNode])
-						print "Possible containers: " + str(len(Groups))
+			Groups = search(n,neighbourNode,Groups)
 
 		
 		#DOWN
 		if nodeExists(nodeList,n,x,y+1) == True:
 			neighbourNode = findNode(nodeList,n,x,y+1)
-			neighbourHeat = neighbourNode.getHeat()
-			groupFound = False
-			if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
-				if len(Groups) == 0:
-					Groups.append([n,neighbourNode])
-				else:
-					for g in Groups:
-						if neighbourNode.belongsTo(g) == True:
-							if n.belongsTo(g):
-								break
-							else:
-								g.append(n)
-								break
-						elif n.belongsTo(g) == True:
-							if neighbourNode.belongsTo(g):
-								break
-							else:
-								g.append(neighbourNode)
-								break
-					else:
-						Groups.append([n,neighbourNode])
-						print "Possible containers: " + str(len(Groups))
-
+			Groups = search(n,neighbourNode,Groups)
 
 	bestScore = 0
 	bestGroup = []
