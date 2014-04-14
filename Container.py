@@ -93,8 +93,7 @@ def search(Node,neighbourNode,Groups):
 
 def findContainer(heatMap):
 	nodeList = []
-	RED = (255,0,0)
-	DEFAULT = (0,0,0)
+	
 	#Generate Nodes from Points on heatMap
 	x = 0
 	y = 0
