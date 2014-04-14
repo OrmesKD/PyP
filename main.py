@@ -23,7 +23,7 @@ done = False
 clock = pygame.time.Clock()
 
 while not done:
-    clock.tick(10)
+    clock.tick(30)
 
     #Each refresh, fill the screen with White
     Screen.fillScreen(pygame)

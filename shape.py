@@ -29,6 +29,29 @@ class Shape:
     def setY2(y):
         self.y2 = y
 
+    def move(direction):
+
+        if direction == 'LEFT':
+            self.x1-=1
+            self.x2-=1
+            self.setX1(self.x1)
+            self.setX2(self.x2)
+        elif direction == 'RIGHT':
+            self.x1+=1
+            self.x2+=1
+            self.setX1(self.x1)
+            self.setX2(self.x2)
+        elif direction == 'UP':
+            self.y1-=1
+            self.y2-=1
+            self.setY1(self.y1)
+            self.setY2(self.y2)
+        elif direction == 'DOWN':
+            self.y1+=1
+            self.y2+=1
+            self.setY1(self.y1)
+            self.setY2(self.y2)
+
     def edges(self,common,objectMap):
         self.common = common.copy()
         
