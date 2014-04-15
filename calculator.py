@@ -1,6 +1,6 @@
 import sys
 import pygame
-from shape import *
+from Object import *
 from numpy import *
 from Node import *
 
@@ -165,7 +165,8 @@ def findContainer(heatMap):
 	print "Lowest: " + str(lowestX) + ", " + str(lowestY)
 	print "Highest: " + str(highestX) + ", " + str(highestY)
 
-	bestContainer = [lowestX,lowestY,highestX,highestY]
+	bestContainer = Container(lowestX,lowestY,highestX,highestY)
+	bestContainer.setScore(bestScore)
 
 	return bestContainer
 

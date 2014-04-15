@@ -1,7 +1,7 @@
 import sys, pygame
 from numpy import *
 
-class Shape:
+class Object:
 
     def __init__(self,x1,y1,x2,y2):
         self.x1 = x1
@@ -28,6 +28,8 @@ class Shape:
         self.y1 = y
     def setY2(y):
         self.y2 = y
+
+class Shape(Object):
 
     def move(direction):
 
@@ -116,3 +118,11 @@ class Shape:
         
 
         return common
+
+class Container(Object):
+
+    def setScore(self,score):
+        self.score = score
+
+    def getScore(self):
+        return self.score

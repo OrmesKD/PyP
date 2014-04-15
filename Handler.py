@@ -1,5 +1,5 @@
 import sys,calculator,optimiseContainer
-from shape import *
+from Object import *
 
 class Handler:
 

@@ -1,8 +1,5 @@
-import sys
-import pygame
-import shape
-import numpy
-import Node
+import sys,pygame,numpy,Node
+from Object import *
 
 # Colors that will be used in RGB format
 BLACK = (0,0,0)
@@ -32,7 +29,7 @@ def initDraw(pygame,heatMap):
 	
 
 def drawContainer(pygame,container):
-	pygame.draw.rect(screen, RED, [container[0]*rate,container[1]*rate,(container[2]-container[0]+1)*rate,(container[3]-container[1]+1)*rate],1)
+	pygame.draw.rect(screen, RED, [container.getX1()*rate,container.getY1()*rate,(container.getX2()-container.getX1()+1)*rate,(container.getY2()-container.getY1()+1)*rate],1)
 	
 
 def drawShapes(pygame,Shapes):

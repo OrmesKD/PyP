@@ -1,5 +1,5 @@
 import sys,Screen,Handler,pygame
-from shape import *
+from Object import *
 
 #MAIN FUNCTION TO PYPS
 ######################
