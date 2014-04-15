@@ -15,31 +15,33 @@ class Handler:
 
 		return bestContainer
 
-	def Move(self):
+	def Move(self,container):
+		oldContainer = container
 		Shapes = self.Shapes
 		heatMap = self.heatMap
+		directions = ['LEFT','RIGHT','UP','DOWN']
+		oppositeDirections = ['RIGHT','LEFT','DOWN','UP']
+		moved = False
 
 		for shape in Shapes:
 			x1 = shape.getX1()
 			x2 = shape.getX2()
 			y1 = shape.getY1()
 			y2 = shape.getY2()
+#start of while loop here?
+			while moved:
+				for direction,oppositeDirection in zip(directions,oppositeDirections):
 
+					shape.move(direction)
+					new_heatMap = calculator.calculateHeat(Shapes)
+					newContainer = calculator.findContainer(new_heatMap)
 
-
-
-		#Move left
-			shape.move('LEFT')
-			new_heatMap = calculator.calculateHeat(Shapes)
-			newContainer = calculator.findContainer(new_heatMap)
-
-
-		#Move right
-
-		#Move up
-
-		#Move down
-
-
+					if newContainer.getScore() > oldContainer.getScore():
+						bestContainer = newContainer
+						oldContainer = newContainer
+						moved = True
+						#update Screen
+					else:
+						shape.move(oppositeDirection)
 
 
