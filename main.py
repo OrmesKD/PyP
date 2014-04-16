@@ -10,7 +10,8 @@ shape1 = Shape(20,20,30,60)
 shape2 = Shape(60,20,80,40)
 shape3 = Shape(20,60,80,70)
 Shapes = [shape1,shape2,shape3]
-
+shapeGroups = []
+shapeGroups.append([shape1,shape2],[shape3])
 #Intialise the handler object for the container methods
 handler = Handler.Handler(Shapes)
 
@@ -41,10 +42,10 @@ while not done:
 
     
     Screen.drawContainer(pygame,bestContainer)
+    handler.Move(bestContainer)
     pygame.display.flip()
 
 pygame.quit()
 
-def moveUpdate(bestContainer):
-    Screen.drawContainer(pygame,bestContainer)
+
 

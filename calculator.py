@@ -10,7 +10,7 @@ def Generate():
 	shape2 = Shape(60,20,80,40)
 	shape3 = Shape(20,60,80,70)
 	Shapes = [shape1,shape2,shape3]
-
+	
 	return Shapes
 
 def findNode(nodeList,targetNode,x,y):
@@ -54,7 +54,7 @@ def calculateHeat(Shapes):
 	y = 0
 	for row in heatMap:
 	    for e in row:
-	        if e < 51 or e > 99:
+	        if e < 51:
 	            heatMap[x,y] = 0
 	        y+=1
 	    x+=1

@@ -21,7 +21,7 @@ class Handler:
 		heatMap = self.heatMap
 		directions = ['LEFT','RIGHT','UP','DOWN']
 		oppositeDirections = ['RIGHT','LEFT','DOWN','UP']
-		moved = False
+		moved = True
 
 		for shape in Shapes:
 			x1 = shape.getX1()
@@ -32,16 +32,17 @@ class Handler:
 			while moved: #and not collision?
 				count=0
 				for direction,oppositeDirection in zip(directions,oppositeDirections):
-
+					print 'Trying '+direction
 					shape.move(direction)
 					new_heatMap = calculator.calculateHeat(Shapes)
 					newContainer = calculator.findContainer(new_heatMap)
 
 					if newContainer.getScore() > oldContainer.getScore():
+						print "Better container found!"
 						bestContainer = newContainer
 						oldContainer = newContainer
 						count+=1
-						main.moveUpdate(bestContainer) #HOW TI FUCK DO I UPDATE?
+						#HOW TI FUCK DO I UPDATE?
 					else:
 						shape.move(oppositeDirection)
 				if count == 0:

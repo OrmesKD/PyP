@@ -20,18 +20,18 @@ class Object:
         return self.y2
     
 
-    def setX1(x):
+    def setX1(self,x):
         self.x1 = x
-    def setX2(x):
+    def setX2(self,x):
         self.x2 = x
-    def setY1(y):
+    def setY1(self,y):
         self.y1 = y
-    def setY2(y):
+    def setY2(self,y):
         self.y2 = y
 
 class Shape(Object):
 
-    def move(direction):
+    def move(self,direction):
 
         if direction == 'LEFT':
             self.x1-=1
