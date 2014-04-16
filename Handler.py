@@ -1,4 +1,4 @@
-import sys,calculator,optimiseContainer
+import sys,calculator,Screen
 from Object import *
 
 class Handler:
@@ -29,7 +29,8 @@ class Handler:
 			y1 = shape.getY1()
 			y2 = shape.getY2()
 #start of while loop here?
-			while moved:
+			while moved: #and not collision?
+				count=0
 				for direction,oppositeDirection in zip(directions,oppositeDirections):
 
 					shape.move(direction)
@@ -39,9 +40,11 @@ class Handler:
 					if newContainer.getScore() > oldContainer.getScore():
 						bestContainer = newContainer
 						oldContainer = newContainer
-						moved = True
-						#update Screen
+						count+=1
+						main.moveUpdate(bestContainer) #HOW TI FUCK DO I UPDATE?
 					else:
 						shape.move(oppositeDirection)
+				if count == 0:
+					moved=False
 
 
