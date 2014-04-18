@@ -31,6 +31,22 @@ class Object:
 
 class Shape(Object):
 
+    def __init__(self,x1,y1,x2,y2):
+        Object.__init__(self,x1,y1,x2,y2)
+        self.directions = ['LEFT','RIGHT','UP','DOWN']
+
+    def removeDirection(self,direction):
+        self.directions.remove(direction)
+
+    def getDirections(self):
+        return self.directions
+
+    def hasDirection(self,direction):
+        for d in self.directions:
+            if d == direction:
+                return True
+        return False
+
     def move(self,direction):
 
         if direction == 'LEFT':
@@ -54,9 +70,11 @@ class Shape(Object):
             self.setY1(self.y1)
             self.setY2(self.y2)
 
+
+
     def edges(self,common,objectMap):
         self.common = common.copy()
-        
+        directions = self.getDirections()
         x1=self.x1
         y1=self.y1
         x2=self.x2

@@ -32,7 +32,6 @@ def calculateHeat(Shapes):
 
 	heatMap = zeros((100,100), dtype=int)
 	objMap = zeros((100,100), dtype=int)
-	posPoints = zeros((100,100),dtype=int)
 
 	for shape in Shapes:
 	    xx=shape.getX1()
@@ -52,13 +51,17 @@ def calculateHeat(Shapes):
 	#Rules out all areas that are not considered for containers
 	x = 0
 	y = 0
-	for row in heatMap:
-	    for e in row:
-	        if e < 51:
-	            heatMap[x,y] = 0
-	        y+=1
-	    x+=1
-	    y=0
+	for index,heat in ndenumerate(heatMap):
+		if heat < 51:
+			heatMap[index[0],index[1]] = 0
+
+	# for row in heatMap:
+	#     for e in row:
+	#         if e < 51:
+	#             heatMap[x,y] = 0
+	#         y+=1
+	#     x+=1
+	#     y=0
 
 	return heatMap
 
@@ -92,21 +95,25 @@ def search(Node,neighbourNode,Groups):
 	return Groups
 
 def findContainer(heatMap):
-	nodeList = []
+	nodeList = array(Node)
 	
 	#Generate Nodes from Points on heatMap
 	x = 0
 	y = 0
-	for row in heatMap:
-	    for heat in row:
-	        if heat < 50:
-	        	y+=1
-	        	continue
-	        else:
-	        	nodeList.append(Node(x,y,heat))
-	        y+=1 
-	    x+=1
-	    y=0
+	for index,heat in ndenumerate(heatMap):
+		if heat > 50:
+			nodeList.append(Node(index[0],index[1],heat))
+
+	# for row in heatMap:
+	#     for heat in row:
+	#         if heat < 50:
+	#         	y+=1
+	#         	continue
+	#         else:
+	#         	nodeList.append(Node(x,y,heat))
+	#         y+=1 
+	#     x+=1
+	#     y=0
 	
 	#Group nodes in to possible container areas
 	Groups = []
@@ -161,7 +168,7 @@ def findContainer(heatMap):
 			highestY = node.getY()
 
 	print "Number of groups: " + str(len(Groups))
-	print "Number of nodes in group: " + str(len(bestGroup))
+	print "Score of group: " + str(bestScore)
 	print "Lowest: " + str(lowestX) + ", " + str(lowestY)
 	print "Highest: " + str(highestX) + ", " + str(highestY)
 

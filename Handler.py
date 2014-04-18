@@ -15,25 +15,28 @@ class Handler:
 
 		return bestContainer
 
-	def Move(self,container):
+	def update(self,pygame,Shapes,heatMap,Container):
+		Screen.fillScreen(pygame)
+		Screen.drawShapes(pygame,Shapes)
+		Screen.drawContainer(pygame,Container)
+
+	def Move(self,container,shapeGroups,pygame):
 		oldContainer = container
 		Shapes = self.Shapes
 		heatMap = self.heatMap
-		directions = ['LEFT','RIGHT','UP','DOWN']
-		oppositeDirections = ['RIGHT','LEFT','DOWN','UP']
+		
 		moved = True
 
-		for shape in Shapes:
-			x1 = shape.getX1()
-			x2 = shape.getX2()
-			y1 = shape.getY1()
-			y2 = shape.getY2()
-#start of while loop here?
-			while moved: #and not collision?
+		for shapeg in shapeGroups:
+			directions = ['LEFT','RIGHT','UP','DOWN']
+			oppositeDirections = ['RIGHT','LEFT','DOWN','UP']
+			while moved:
 				count=0
 				for direction,oppositeDirection in zip(directions,oppositeDirections):
 					print 'Trying '+direction
-					shape.move(direction)
+					for shape in shapeg:
+						print 'Shape: ' + str(shape.getX1())+ ' '+ str(shape.getY1())
+						shape.move(direction)
 					new_heatMap = calculator.calculateHeat(Shapes)
 					newContainer = calculator.findContainer(new_heatMap)
 
@@ -41,10 +44,22 @@ class Handler:
 						print "Better container found!"
 						bestContainer = newContainer
 						oldContainer = newContainer
+						heatMap = new_heatMap
 						count+=1
-						#HOW TI FUCK DO I UPDATE?
+						#for shape in shapeg:
+						#	shape.removeDirection(oppositeDirection)
+						try:
+							directions.remove(oppositeDirection)
+							oppositeDirections.remove(direction)
+						except ValueError:
+							continue
+						self.update(pygame,Shapes,heatMap,bestContainer)
+						break
 					else:
-						shape.move(oppositeDirection)
+						for shape in shapeg:
+							shape.move(oppositeDirection)
+
+					self.update(pygame,Shapes,heatMap,oldContainer)
 				if count == 0:
 					moved=False
 

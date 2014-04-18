@@ -26,15 +26,16 @@ def initDraw(pygame,heatMap):
 	        y+=1
 	    x+=1
 	    y=0
-	
+	pygame.display.flip()
 
 def drawContainer(pygame,container):
 	pygame.draw.rect(screen, RED, [container.getX1()*rate,container.getY1()*rate,(container.getX2()-container.getX1()+1)*rate,(container.getY2()-container.getY1()+1)*rate],1)
-	
+	pygame.display.flip()
 
 def drawShapes(pygame,Shapes):
 	for shape in Shapes:
 	    pygame.draw.rect(screen, BLACK, [shape.getX1()*rate,shape.getY1()*rate,(shape.getX2()-shape.getX1())*rate,(shape.getY2()-shape.getY1())*rate])
+	    pygame.display.flip()
 	
 
 def drawText(pygame,heatMap):
