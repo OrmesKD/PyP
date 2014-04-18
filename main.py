@@ -1,4 +1,4 @@
-import sys,Screen,Handler,pygame
+import sys,Screen,Handler,pygame,cProfile
 from Object import *
 
 #MAIN FUNCTION TO PYPS
@@ -38,7 +38,7 @@ while not done:
     #Screen.initDraw(pygame,heatMap)
     if firstLaunch:
         pygame.display.flip()
-        bestContainer = handler.Search()
+        cProfile.run('bestContainer = handler.Search()')
         Screen.drawContainer(pygame,bestContainer)
         firstLaunch = False
 

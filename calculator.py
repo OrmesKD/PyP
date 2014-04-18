@@ -69,33 +69,42 @@ def search(Node,neighbourNode,Groups):
 	n = Node
 	heat = n.getHeat()
 	neighbourHeat = neighbourNode.getHeat()
+	
 
 	groupFound = False
 	if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
 		if len(Groups) == 0:
+			n.setGroup(1)
+			neighbourNode.setGroup(1)
 			Groups.append([n,neighbourNode])
 			print "Possible containers: " + str(len(Groups))
 		else:
-			for g in Groups:
-				if neighbourNode.belongsTo(g) == True:
-					if n.belongsTo(g):
+			for i in xrange(len(Groups)):
+				
+				if neighbourNode.belongsTo(i+1) == True:
+					if n.belongsTo(i+1):
 						break
 					else:
-						g.append(n)
+						n.setGroup(i+1)
+						Groups[i].append(n)
 						break
-				elif n.belongsTo(g) == True:
-					if neighbourNode.belongsTo(g):
+				elif n.belongsTo(i+1) == True:
+					if neighbourNode.belongsTo(i+1):
 						break
 					else:
-						g.append(neighbourNode)
+						neighbourNode.setGroup(i+1)
+						Groups[i].append(neighbourNode)
 						break
 			else:
+				n.setGroup(i+1)
+				neighbourNode.setGroup(i+1)
 				Groups.append([n,neighbourNode])
 				print "Possible containers: " + str(len(Groups))
+
 	return Groups
 
 def findContainer(heatMap):
-	nodeList = array(Node)
+	nodeList = []
 	
 	#Generate Nodes from Points on heatMap
 	x = 0
@@ -103,6 +112,8 @@ def findContainer(heatMap):
 	for index,heat in ndenumerate(heatMap):
 		if heat > 50:
 			nodeList.append(Node(index[0],index[1],heat))
+	nodeList = array(nodeList)
+			#nodeList.append(Node(index[0],index[1],heat))
 
 	# for row in heatMap:
 	#     for heat in row:
@@ -118,7 +129,7 @@ def findContainer(heatMap):
 	#Group nodes in to possible container areas
 	Groups = []
 	
-	for n in nodeList:
+	for i,n in ndenumerate(nodeList):
 		x = n.getX()
 		y = n.getY()
 		
@@ -144,11 +155,14 @@ def findContainer(heatMap):
 			neighbourNode = findNode(nodeList,n,x,y+1)
 			Groups = search(n,neighbourNode,Groups)
 
+	Groups = array(Groups)
+
 	bestScore = 0
 	bestGroup = []
-	for g in Groups:
+	for i,g in ndenumerate(Groups):
 		score = 0
-		for node in g:
+		g = array(g)
+		for i,node in ndenumerate(g):
 			score += node.getHeat()
 		if score > bestScore:
 			bestScore = score
@@ -158,11 +172,11 @@ def findContainer(heatMap):
 	lowestY = 100
 	highestX = 0
 	highestY = 0
-	for node in bestGroup:
+	for i,node in ndenumerate(bestGroup):
 		if node.getX() < lowestX and node.getY() < lowestY:
 			lowestX = node.getX()
 			lowestY = node.getY()
-	for node in bestGroup:
+	for i,node in ndenumerate(bestGroup):
 		if node.getX() >= highestX and node.getY() >= highestY:
 			highestX = node.getX()
 			highestY = node.getY()

@@ -8,6 +8,7 @@ class Node:
 		self.y = y
 		self.heat = heat
 		self.colour = (0,0,0)
+		self.group = 0
 
 	def getX(self):
 		return self.x
@@ -24,9 +25,11 @@ class Node:
 	def setColour(self,newColour):
 		self.colour = newColour
 
-	def belongsTo(self,Group):
-		if self in Group:
+	def setGroup(self,group):
+		self.group = group
+
+	def belongsTo(self,group):
+		if self.group == group:
 			return True
-		else:
-			return False
+		return False
 			
