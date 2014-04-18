@@ -72,32 +72,31 @@ def search(Node,neighbourNode,Groups):
 	
 
 	groupFound = False
-	if neighbourHeat >= heat-10 and neighbourHeat <= heat+10:
+	if neighbourHeat >= heat-5 and neighbourHeat <= heat+5:
 		if len(Groups) == 0:
-			n.setGroup(1)
-			neighbourNode.setGroup(1)
+			n.setGroup([n,neighbourNode])
+			neighbourNode.setGroup([n,neighbourNode])
 			Groups.append([n,neighbourNode])
 			print "Possible containers: " + str(len(Groups))
 		else:
-			for i in xrange(len(Groups)):
-				
-				if neighbourNode.belongsTo(i+1) == True:
-					if n.belongsTo(i+1):
+			for g in Groups:
+				if neighbourNode.belongsTo(g) == True:
+					if n.belongsTo(g):
 						break
 					else:
-						n.setGroup(i+1)
-						Groups[i].append(n)
+						n.setGroup(g)
+						g.append(n)
 						break
-				elif n.belongsTo(i+1) == True:
-					if neighbourNode.belongsTo(i+1):
+				elif n.belongsTo(g) == True:
+					if neighbourNode.belongsTo(g):
 						break
 					else:
-						neighbourNode.setGroup(i+1)
-						Groups[i].append(neighbourNode)
+						neighbourNode.setGroup(g)
+						g.append(neighbourNode)
 						break
 			else:
-				n.setGroup(i+1)
-				neighbourNode.setGroup(i+1)
+				n.setGroup([n,neighbourNode])
+				neighbourNode.setGroup([n,neighbourNode])
 				Groups.append([n,neighbourNode])
 				print "Possible containers: " + str(len(Groups))
 
