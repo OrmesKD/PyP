@@ -6,9 +6,9 @@ from Object import *
 
 
 #HARD CODED SHAPES, WILL REQUIRE BUTTON PRESS LATER.
-shape1 = Shape(20,20,30,60)
-shape2 = Shape(60,20,80,40)
-shape3 = Shape(20,60,80,70)
+shape1 = Shape(30,30,40,70)
+shape2 = Shape(70,30,90,50)
+shape3 = Shape(30,70,90,80)
 Shapes = [shape1,shape2,shape3]
 shapeGroups = []
 shapeGroups.append([shape1,shape3])

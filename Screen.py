@@ -6,8 +6,8 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0)
 
-size = [800,800]
-rate = 8
+size = [500,500]
+rate = 5
 screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("Container example")

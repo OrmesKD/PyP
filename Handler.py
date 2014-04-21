@@ -52,13 +52,13 @@ class Handler:
 							directions.remove(oppositeDirection)
 							oppositeDirections.remove(direction)
 						except ValueError:
-							continue
+							pass
+
 						self.update(pygame,Shapes,heatMap,bestContainer)
-						break
+						
 					else:
 						for shape in shapeg:
 							shape.move(oppositeDirection)
-
 					self.update(pygame,Shapes,heatMap,oldContainer)
 				if count == 0:
 					moved=False
